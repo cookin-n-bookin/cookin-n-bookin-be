@@ -15,7 +15,7 @@ describe('cookin-n-bookin-be routes', () => {
 
   it('Should be able to sign up a user', async () => {
     const res = await request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/user/signup')
       .send({ username: 'dobby', password: 'chicken' });
 
     expect(res.body).toEqual({ id: expect.any(String), username: 'dobby' });
@@ -31,7 +31,7 @@ describe('cookin-n-bookin-be routes', () => {
 
     const agent = request.agent(app);
 
-    const res = await agent.post('/api/v1/auth/signin').send(user);
+    const res = await agent.post('/api/v1/user/signin').send(user);
 
     expect(res.body).toEqual({ message: 'Signed in successfully!' });
   });
