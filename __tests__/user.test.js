@@ -21,7 +21,7 @@ describe('cookin-n-bookin-be routes', () => {
     expect(res.body).toEqual({ id: expect.any(String), username: 'dobby' });
   });
 
-  it.only('Should be able to sign in a user', async () => {
+  it('Should be able to sign in a user', async () => {
     const user = {
       username: 'dobby',
       password: 'chicken',
@@ -34,5 +34,32 @@ describe('cookin-n-bookin-be routes', () => {
     const res = await agent.post('/api/v1/user/signin').send(user);
 
     expect(res.body).toEqual({ message: 'Signed in successfully!' });
+  });
+
+  it('logs out a user', async () => {
+    const agent = request.agent(app);
+    await UserService.create({
+      username: 'dobby',
+      password: 'chicken',
+    });
+
+    const user = await agent
+      .post('/api/v1/user/signin')
+      .send({
+        username: 'dobby',
+        password: 'chicken',
+      });
+
+    const res = await agent
+      .delete('/api/v1/user/sessions')
+      .send({ 
+        username: user.email,
+        password: 'chicken',
+      });
+
+    expect(res.body).toEqual({
+      message: 'Successfully signed out',
+
+    });
   });
 });
