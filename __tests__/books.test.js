@@ -17,7 +17,7 @@ describe('book routes', () => {
     const book = {
       title: 'cookin',
       author: 'bookin',
-      image_id: expect.any(String),
+      imageId: expect.any(String),
     };
     const res = await request(app)
       .post('/api/v1/books')
