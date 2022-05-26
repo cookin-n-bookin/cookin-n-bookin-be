@@ -3,6 +3,8 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const Book = require('../lib/models/Book');
+const User = require('../lib/models/User');
 
 describe('cookin-n-bookin-be routes', () => {
   beforeEach(() => {
@@ -31,7 +33,9 @@ describe('cookin-n-bookin-be routes', () => {
 
     const agent = request.agent(app);
 
-    const res = await agent.post('/api/v1/users/signin').send(user);
+    const res = await agent
+      .post('/api/v1/users/signin')
+      .send(user);
 
     expect(res.body).toEqual({ message: 'Signed in successfully!' });
   });
@@ -59,7 +63,34 @@ describe('cookin-n-bookin-be routes', () => {
 
     expect(res.body).toEqual({
       message: 'Successfully signed out',
-
     });
+  });
+
+  it('should get the user by username', async () => {
+    // create user
+    const agent = request.agent(app);
+    await UserService.create({
+      username: 'dobby',
+      password: 'chicken',
+    });
+
+    // sign in user
+    const user = await agent
+      .post('/api/v1/users/signin')
+      .send({
+        username: 'dobby',
+        password: 'chicken',
+      });
+
+    // gets user by username
+    const res = await request(app)
+      .get(`/api/v1/users/${user.username}`);
+
+    expect(res.body).toEqual({
+      id: '1', 
+      username: 'dobby',
+      password: 'chicken'
+    });
+
   });
 });
