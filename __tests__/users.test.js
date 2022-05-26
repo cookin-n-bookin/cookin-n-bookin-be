@@ -64,29 +64,27 @@ describe('cookin-n-bookin-be routes', () => {
     });
   });
 
-  it.only('Should be about to return the current user', async () => {
+  it.only('Should be able to return the current user', async () => {
     const user = {
       username: 'dobby',
       password: 'chicken',
-    }
-    const agent = request.agent(app);
-    await UserService.create(
-      user
-    );
+    };
 
+    // signs up user
+    await UserService.create(user);
+
+    const agent = request.agent(app);
+    
+    // logs in user
     await agent
       .post('/api/v1/users/signin')
-      .send(
-        user
-      );
-    const me = await agent.get('/api/v1/users/me');
+      .send(user);
 
-    expect(me.body).toEqual({
-      id: expect.any(String),
-      ...user,
-      exp: expect.any(Number),
-      iat: expect.any(Number),
-    });
-  })
+    const me = await agent
+      .get('/api/v1/users/me');
+
+    expect(me.body).toEqual(user);
+
+  });
 
 });
