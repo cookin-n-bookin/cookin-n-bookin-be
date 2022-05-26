@@ -64,4 +64,29 @@ describe('cookin-n-bookin-be routes', () => {
     });
   });
 
+  it.only('Should be about to return the current user', async () => {
+    const user = {
+      username: 'dobby',
+      password: 'chicken',
+    }
+    const agent = request.agent(app);
+    await UserService.create(
+      user
+    );
+
+    await agent
+      .post('/api/v1/users/signin')
+      .send(
+        user
+      );
+    const me = await agent.get('/api/v1/users/me');
+
+    expect(me.body).toEqual({
+      id: expect.any(String),
+      ...user,
+      exp: expect.any(Number),
+      iat: expect.any(Number),
+    });
+  })
+
 });
