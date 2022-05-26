@@ -27,7 +27,7 @@ describe('book routes', () => {
       id: expect.any(String),
       ...book,
     });
-  })
+  });
 
   it('should get all of the books', async () => {
     const book = await Book.insert({
@@ -61,7 +61,7 @@ describe('book routes', () => {
       author: 'bookin',
       imageId: expect.any(String),
     });
-  })
+  });
 
   it('should update a book by its id', async () => {
     const book = await Book.insert({
@@ -82,5 +82,5 @@ describe('book routes', () => {
 
     expect(res.body).toEqual(expected);
     expect(await Book.getById(book.id)).toEqual(expected);
-  })
+  });
 });
