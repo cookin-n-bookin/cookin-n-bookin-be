@@ -74,7 +74,7 @@ describe('cookin-n-bookin-be routes', () => {
     await UserService.create(user);
 
     const agent = request.agent(app);
-    
+
     // logs in user
     await agent
       .post('/api/v1/users/signin')
@@ -83,7 +83,12 @@ describe('cookin-n-bookin-be routes', () => {
     const me = await agent
       .get('/api/v1/users/me');
 
-    expect(me.body).toEqual(user);
+    expect(me.body).toEqual({
+      id: expect.any(String),
+      username: 'dobby',
+      exp: expect.any(Number),
+      iat: expect.any(Number),
+    });
 
   });
 
