@@ -45,7 +45,7 @@ describe('book routes', () => {
       }]);
   });
 
-  it('should get a book by its Id', async () => {
+  it('should get a book by its id', async () => {
     const book = await Book.insert({
       title: 'cookin',
       author: 'bookin',
@@ -53,11 +53,34 @@ describe('book routes', () => {
     });
 
     const res = await request(app)
-      .get('/api/v1/books/1');
+      .get(`/api/v1/books/${book.id}`);
 
     expect(res.body).toEqual({
       id: '1',
-      ...book,
+      title: 'cookin',
+      author: 'bookin',
+      imageId: expect.any(String),
     });
+  })
+
+  it('should update a book by its id', async () => {
+    const book = await Book.insert({
+      title: 'cookin',
+      author: 'bookin',
+      imageId: expect.any(String),
+    });
+
+    const res = await request(app)
+      .patch(`/api/v1/books/${book.id}`)
+      .send({ title: 'chicken' });
+    const expected = {
+      id: book.id,
+      title: 'chicken',
+      author: 'bookin',
+      imageId: expect.any(String),
+    };
+
+    expect(res.body).toEqual(expected);
+
   })
 });
