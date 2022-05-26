@@ -44,4 +44,20 @@ describe('book routes', () => {
         ...book
       }]);
   });
+
+  it('should get a book by its Id', async () => {
+    const book = await Book.insert({
+      title: 'cookin',
+      author: 'bookin',
+      imageId: expect.any(String),
+    });
+
+    const res = await request(app)
+      .get('/api/v1/books/1');
+
+    expect(res.body).toEqual({
+      id: '1',
+      ...book,
+    });
+  })
 });
