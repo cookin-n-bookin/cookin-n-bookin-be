@@ -64,7 +64,7 @@ describe('cookin-n-bookin-be routes', () => {
     });
   });
 
-  it.only('Should be able to return the current user', async () => {
+  it('Should be able to return the current user', async () => {
     const user = {
       username: 'dobby',
       password: 'chicken',
