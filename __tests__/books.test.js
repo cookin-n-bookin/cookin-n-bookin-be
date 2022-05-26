@@ -81,6 +81,6 @@ describe('book routes', () => {
     };
 
     expect(res.body).toEqual(expected);
-
+    expect(await Book.getById(book.id)).toEqual(expected);
   })
 });
