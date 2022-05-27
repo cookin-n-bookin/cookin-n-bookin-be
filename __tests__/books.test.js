@@ -15,7 +15,7 @@ describe('book routes', () => {
     pool.end();
   });
 
-  it.only('should insert a new book', async () => {
+  it('should insert a new book', async () => {
     const newUser = {
       username: 'dobby',
       password: 'chicken',
@@ -63,20 +63,43 @@ describe('book routes', () => {
   });
 
   it('should get a book by its id', async () => {
-    const book = await Book.insert({
-      title: 'cookin',
-      author: 'bookin',
-      imageId: expect.any(String),
-    });
 
-    const res = await request(app)
-      .get(`/api/v1/books/${book.id}`);
+    const user = {
+      username: 'dobby',
+      password: 'chicken'
+    };
+
+
+    await UserService.create(user);
+
+    const agent = request.agent(app);
+    await agent
+      .post('/api/v1/users/signin')
+      .send(user)
+
+
+    const book = await agent
+      .post(`/api/v1/books`)
+      .send({
+        title: 'cookin',
+        author: 'bookin',
+        imageId: 'it is an image'
+      });
+
+
+    console.log('|||', book.body);
+    const res = await agent
+      .get(`/api/v1/books/${book.body.id}`);
 
     expect(res.body).toEqual({
-      id: '1',
+      id: expect.any(String),
       title: 'cookin',
       author: 'bookin',
       imageId: expect.any(String),
+      users: [{
+        user_id: '1',
+        username: 'dobby',
+      }]
     });
   });
 
