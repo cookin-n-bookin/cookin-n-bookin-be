@@ -18,7 +18,12 @@ describe('cookin-n-bookin-be routes', () => {
       .post('/api/v1/users/signup')
       .send({ username: 'dobby', password: 'chicken' });
 
-    expect(res.body).toEqual({ id: expect.any(String), username: 'dobby' });
+    const user = {
+      id: '1', 
+      username: 'dobby'
+    };
+
+    expect(res.body).toEqual({ user, message: 'Signed up successfully!' });
   });
 
   it('Should be able to sign in a user', async () => {
