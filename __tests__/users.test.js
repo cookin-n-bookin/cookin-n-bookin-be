@@ -22,20 +22,25 @@ describe('cookin-n-bookin-be routes', () => {
   });
 
   it('Should be able to sign in a user', async () => {
-    const user = {
+    const newUser = {
       username: 'dobby',
       password: 'chicken',
     };
 
-    await UserService.create(user);
+    await UserService.create(newUser);
 
     const agent = request.agent(app);
 
     const res = await agent
       .post('/api/v1/users/signin')
-      .send(user);
+      .send(newUser);
+      
+    const user = {
+      id: '1', 
+      username: 'dobby'
+    };
 
-    expect(res.body).toEqual({ message: 'Signed in successfully!' });
+    expect(res.body).toEqual({ user, message: 'Signed in successfully!' });
   });
 
   it('logs out a user', async () => {
