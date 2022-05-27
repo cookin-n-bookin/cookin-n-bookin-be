@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const Book = require('../lib/models/Book');
+const UserService = require('../lib/services/UserService');
 
 
 describe('book routes', () => {
@@ -14,13 +15,29 @@ describe('book routes', () => {
     pool.end();
   });
 
-  it('should insert a new book', async () => {
+  it.only('should insert a new book', async () => {
+    const newUser = {
+      username: 'dobby',
+      password: 'chicken',
+    };
     const book = {
       title: 'cookin',
       author: 'bookin',
       imageId: expect.any(String),
     };
-    const res = await request(app)
+    await UserService.create(newUser);
+
+    const agent = request.agent(app);
+    let res = await agent
+      .post('/api/v1/books')
+      .send(book);
+
+    expect(res.body).toEqual({ message: 'You need to sign in to continue', status: 401 });
+    await agent
+      .post('/api/v1/users/signin')
+      .send(newUser)
+
+    res = await agent
       .post('/api/v1/books')
       .send(book);
     expect(res.body).toEqual({
