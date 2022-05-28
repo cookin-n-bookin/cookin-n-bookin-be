@@ -35,7 +35,7 @@ describe('book routes', () => {
     expect(res.body).toEqual({ message: 'You need to sign in to continue', status: 401 });
     await agent
       .post('/api/v1/users/signin')
-      .send(newUser)
+      .send(newUser);
 
     res = await agent
       .post('/api/v1/books')
@@ -75,11 +75,11 @@ describe('book routes', () => {
     const agent = request.agent(app);
     await agent
       .post('/api/v1/users/signin')
-      .send(user)
+      .send(user);
 
 
     const book = await agent
-      .post(`/api/v1/books`)
+      .post('/api/v1/books')
       .send({
         title: 'cookin',
         author: 'bookin',
@@ -87,7 +87,6 @@ describe('book routes', () => {
       });
 
 
-    console.log('|||', book.body);
     const res = await agent
       .get(`/api/v1/books/${book.body.id}`);
 
@@ -115,10 +114,10 @@ describe('book routes', () => {
     const agent = request.agent(app);
     await agent
       .post('/api/v1/users/signin')
-      .send(user)
+      .send(user);
 
     const book = await agent
-      .post(`/api/v1/books`)
+      .post('/api/v1/books')
       .send({
         title: 'cookin',
         author: 'bookin',
