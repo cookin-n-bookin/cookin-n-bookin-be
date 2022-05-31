@@ -3,26 +3,27 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const User = require('../lib/models/User');
 
-const mockUser = {
-  username: 'dobby2',
-  password: 'chicken'
-};
+// const mockUser = {
+//   username: 'dobby2',
+//   password: 'chicken'
+// };
 
-const registerAndLogin = async (userProps = {}) => {
-  const password = userProps.password ?? mockUser.password;
+// const registerAndLogin = async (userProps = {}) => {
+//   const password = userProps.password ?? mockUser.password;
 
-  const agent = request.agent(app);
+//   const agent = request.agent(app);
 
-  const user = await UserService.create({
-    ...mockUser, ...userProps
-  });
+//   const user = await UserService.create({
+//     ...mockUser, ...userProps
+//   });
 
-  const { username } = user;
-  await agent.post('api/v1/users/signin')
-    .send({ username, password });
-  return [agent, user]
-}
+//   const { username } = user;
+//   await agent.post('api/v1/users/signin')
+//     .send({ username, password });
+//   return [agent, user]
+// }
 
 
 describe('recipe routes', () => {
@@ -35,15 +36,23 @@ describe('recipe routes', () => {
   });
 
   it('Should insert a recipe according to the books id', async () => {
-    const [agent] = await registerAndLogin();
+    const newUser = {
+      username: 'dobby2',
+      password: 'chicken',
+    };
+
+    const agent = request.agent(app);
+    await agent
+      .post('/api/v1/users/signup')
+      .send(newUser);
 
     const recipe = {
       title: 'Hot Dog',
-      book_id: '1',
-      page_number: '40',
+      bookId: '1',
+      pageNumber: '40',
       ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
-      rating: '5',
-      image_id: 'this is a hotdog'
+      rating: 5,
+      imageId: 'this is a hotdog'
     }
 
     request.agent(app);
