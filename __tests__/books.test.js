@@ -23,7 +23,7 @@ describe('book routes', () => {
     const book = {
       title: 'cookin',
       author: 'bookin',
-      imageId: expect.any(String),
+      imageId: 'it is an image',
     };
     await UserService.create(newUser);
 
@@ -57,6 +57,18 @@ describe('book routes', () => {
       .get('/api/v1/books');
     expect(res.body).toEqual([
       {
+        id: '1',
+        title: 'Foodheim',
+        imageId: 'this is an image',
+        author: 'Eric Wareheim'
+      },
+      {
+        id: '2',
+        title: 'Cook This Book',
+        imageId: 'this is an image',
+        author: 'Molly Baz',
+      },
+      {
         id: expect.any(String),
         ...book
       }]);
@@ -70,11 +82,11 @@ describe('book routes', () => {
     };
 
 
-    await UserService.create(user);
+
 
     const agent = request.agent(app);
     await agent
-      .post('/api/v1/users/signin')
+      .post('/api/v1/users/signup')
       .send(user);
 
 
@@ -89,6 +101,7 @@ describe('book routes', () => {
 
     const res = await agent
       .get(`/api/v1/books/${book.body.id}`);
+    console.log('||', book.body.id);
 
     expect(res.body).toEqual({
       id: expect.any(String),
@@ -128,7 +141,7 @@ describe('book routes', () => {
       .patch(`/api/v1/books/${book.body.id}`)
       .send({ title: 'chicken' });
     const expected = {
-      id: book.body.id,
+      id: expect.any(String),
       title: 'chicken',
       author: 'bookin',
       imageId: expect.any(String),

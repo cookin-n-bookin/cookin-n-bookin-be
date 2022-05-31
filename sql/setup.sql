@@ -50,6 +50,17 @@ CREATE TABLE users_recipes (
 
 );
 
+INSERT INTO 
+books (title, author, image_id)
+VALUES
+('Foodheim', 'Eric Wareheim', 'this is an image'),
+('Cook This Book', 'Molly Baz', 'this is an image');
+
+-- INSERT INTO 
+-- books_users (book_id, user_id)
+-- VALUES
+-- (1, null),
+-- (2, null);
 
 
 
