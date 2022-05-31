@@ -137,13 +137,13 @@ describe('cookin-n-bookin-be routes', () => {
       .get(`/api/v1/users/${user.id}`);
 
     expect(res2.body).toEqual({
-      user_id: '1',
+      id: '1',
       username: 'dobby',
       books: [{
-        id: expect.any(String),
+        book_id: expect.any(String),
         title: 'cookin',
         author: 'bookin',
-        imageId: 'it is an image',
+        image_id: 'it is an image',
       }]
     });
 
