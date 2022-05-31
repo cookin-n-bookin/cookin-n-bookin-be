@@ -108,23 +108,25 @@ describe('recipe routes', () => {
       .post('/api/v1/users/signup')
       .send(newUser);
 
-    const recipe = {
-      title: 'Hot Dog',
-      bookId: '1',
-      pageNumber: '40',
-      ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
-      rating: 5,
-      imageId: 'this is a hotdog'
-    };
-
     request.agent(app);
-    await agent
+
+    const recipe = await agent
       .post('/api/v1/recipes')
-      .send(recipe);
+      .send({
+        title: 'Hot Dog',
+        bookId: '1',
+        pageNumber: '40',
+        ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
+        rating: 5,
+        imageId: 'this is a hotdog'
+      });
+
 
     const res = await request(app)
-      .patch(`/api/v1/recipes/${recipe.id}`)
+      .patch(`/api/v1/recipes/${recipe.body.id}`)
       .send({ pageNumber: '20' });
+
+    
 
     const expected = {
       id: expect.any(String),
