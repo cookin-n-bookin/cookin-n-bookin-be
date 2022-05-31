@@ -36,7 +36,28 @@ describe('recipe routes', () => {
 
   it('Should insert a recipe according to the books id', async () => {
     const [agent] = await registerAndLogin();
-    const res = await agent.get('api/v1/users');
+
+    const recipe = {
+      title: 'Hot Dog',
+      book_id: '1',
+      page_number: '40',
+      ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
+      rating: '5',
+      image_id: 'this is a hotdog'
+    }
+
+    request.agent(app);
+    let res = await agent
+      .post('/api/v1/recipes')
+      .send(recipe);
+
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      ...recipe
+    });
+
+
+
 
 
   })
