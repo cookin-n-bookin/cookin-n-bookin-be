@@ -93,9 +93,9 @@ describe('recipe routes', () => {
     const res = await agent
       .get('/api/v1/recipes');
 
-    expect(res.body).toEqual({
+    expect(res.body).toEqual([{
       id: expect.any(String),
       ...recipe,
-    })
+    }])
   })
 });
