@@ -3,26 +3,6 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-// const mockUser = {
-//   username: 'dobby2',
-//   password: 'chicken'
-// };
-
-// const registerAndLogin = async (userProps = {}) => {
-//   const password = userProps.password ?? mockUser.password;
-
-//   const agent = request.agent(app);
-
-//   const user = await UserService.create({
-//     ...mockUser, ...userProps
-//   });
-
-//   const { username } = user;
-//   await agent.post('api/v1/users/signin')
-//     .send({ username, password });
-//   return [agent, user]
-// }
-
 
 describe('recipe routes', () => {
   beforeEach(() => {
@@ -121,12 +101,9 @@ describe('recipe routes', () => {
         imageId: 'this is a hotdog'
       });
 
-
     const res = await request(app)
       .patch(`/api/v1/recipes/${recipe.body.id}`)
       .send({ pageNumber: '20' });
-
-    
 
     const expected = {
       id: expect.any(String),
