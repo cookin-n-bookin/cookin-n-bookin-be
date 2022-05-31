@@ -102,4 +102,51 @@ describe('cookin-n-bookin-be routes', () => {
 
   });
 
+  it.only('should get a user by id', async () => {
+    const newUser = {
+      username: 'dobby',
+      password: 'chicken',
+    };
+
+    await UserService.create(newUser);
+
+    const agent = request.agent(app);
+
+    const res = await agent
+      .post('/api/v1/users/signin')
+      .send(newUser);
+      
+    const user = {
+      id: '1', 
+      username: 'dobby'
+    };
+
+    expect(res.body).toEqual({ user, message: 'Signed in successfully!' });
+
+    await agent
+      .post('/api/v1/books')
+      .send({
+        title: 'cookin',
+        author: 'bookin',
+        imageId: 'it is an image'
+      }); 
+
+    console.log('USER ID', user.id);
+    const res2 = await agent
+    
+      .get(`/api/v1/users/${user.id}`);
+
+    expect(res2.body).toEqual({
+      user_id: '1',
+      username: 'dobby',
+      books: [{
+        id: expect.any(String),
+        title: 'cookin',
+        author: 'bookin',
+        imageId: 'it is an image',
+      }]
+    });
+
+  });
+
 });
