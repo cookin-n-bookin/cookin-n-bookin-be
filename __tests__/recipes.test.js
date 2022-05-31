@@ -2,7 +2,6 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const Recipe = require('../lib/models/Recipe');
 
 // const mockUser = {
 //   username: 'dobby2',
@@ -138,6 +137,5 @@ describe('recipe routes', () => {
     };
 
     expect(res.body).toEqual(expected);
-    expect(await Recipe.getById(recipe.id)).toEqual(expected);
   });
 });
