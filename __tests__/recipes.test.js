@@ -64,10 +64,38 @@ describe('recipe routes', () => {
       id: expect.any(String),
       ...recipe
     });
+  });
 
+  it('Should get all the recipes from a book', async () => {
+    const newUser = {
+      username: 'dobby3',
+      password: 'chicken',
+    };
 
+    const agent = request.agent(app);
+    await agent
+      .post('/api/v1/users/signup')
+      .send(newUser);
 
+    const recipe = {
+      title: 'Hot Dog',
+      bookId: '1',
+      pageNumber: '40',
+      ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
+      rating: 5,
+      imageId: 'this is a hotdog'
+    }
 
+    request.agent(app);
+    await agent
+      .post('/api/v1/recipes')
+      .send(recipe);
+    const res = await agent
+      .get('/api/v1/recipes');
 
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      ...recipe,
+    })
   })
 });
