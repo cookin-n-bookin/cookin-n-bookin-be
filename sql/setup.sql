@@ -32,6 +32,7 @@ CREATE TABLE recipes (
   page_number BIGINT,
   ingredients TEXT [],
   rating SMALLINT,
+  CONSTRAINT rating CHECK (rating BETWEEN 1 AND 5),
   image_id TEXT
 );
 
