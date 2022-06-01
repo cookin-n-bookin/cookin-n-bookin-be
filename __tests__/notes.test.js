@@ -8,7 +8,7 @@ describe('recipe routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  
+
   afterAll(() => {
     pool.end();
   });
@@ -18,12 +18,12 @@ describe('recipe routes', () => {
       username: 'dobby2',
       password: 'chicken',
     };
-  
+
     const agent = request.agent(app);
     await agent
       .post('/api/v1/users/signup')
       .send(newUser);
-  
+
     const recipe = {
       title: 'Hot Dog',
       bookId: '1',
@@ -32,14 +32,14 @@ describe('recipe routes', () => {
       rating: 5,
       imageId: 'this is a hotdog'
     };
-  
+
     request.agent(app);
     await agent
       .post('/api/v1/recipes')
       .send(recipe);
 
     const note = {
-      content: 'bake til cooked', 
+      content: 'bake til cooked',
       isPrivate: false,
       userId: '1',
       recipeId: '1'
@@ -60,12 +60,12 @@ describe('recipe routes', () => {
       username: 'dobby2',
       password: 'chicken',
     };
-    
+
     const agent = request.agent(app);
     await agent
       .post('/api/v1/users/signup')
       .send(newUser);
-    
+
     const recipe = {
       title: 'Hot Dog',
       bookId: '1',
@@ -74,19 +74,19 @@ describe('recipe routes', () => {
       rating: 5,
       imageId: 'this is a hotdog'
     };
-    
+
     request.agent(app);
     await agent
       .post('/api/v1/recipes')
       .send(recipe);
-  
+
     const note = {
-      content: 'bake til cooked', 
+      content: 'bake til cooked',
       isPrivate: false,
       userId: '1',
       recipeId: '1'
     };
-  
+
     await agent
       .post('/api/v1/notes')
       .send(note);
@@ -101,5 +101,54 @@ describe('recipe routes', () => {
 
 
   });
+
+  it('Should update a note by the id', async () => {
+    const newUser = {
+      username: 'dobby3',
+      password: 'chicken',
+    };
+
+    const agent = request.agent(app);
+    await agent
+      .post('/api/v1/users/signup')
+      .send(newUser);
+
+    request.agent(app);
+    const recipe = {
+      title: 'Hot Dog',
+      bookId: '1',
+      pageNumber: '40',
+      ingredients: ['buns', 'hotdog', 'mustard', 'jalapenos'],
+      rating: 5,
+      imageId: 'this is a hotdog'
+    };
+
+    await agent
+      .post('/api/v1/recipes')
+      .send(recipe);
+
+    const note = await agent
+      .post('/api/v1/notes')
+      .send({
+        content: 'Cook until frozen',
+        isPrivate: false,
+        userId: '1',
+        recipeId: '1'
+      });
+
+    const res = await agent
+      .patch(`/api/v1/notes/${note.body.id}`)
+      .send({ content: 'Cook until hot' });
+
+    const expected = {
+      id: expect.any(String),
+      content: 'Cook until hot',
+      isPrivate: false,
+      userId: '1',
+      recipeId: '1'
+    };
+
+    expect(res.body).toEqual(expected);
+  })
 
 });
