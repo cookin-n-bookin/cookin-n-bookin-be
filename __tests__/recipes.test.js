@@ -77,7 +77,7 @@ describe('recipe routes', () => {
     }]);
   });
 
-  it.only('should update a recipe by id', async () => {
+  it('should update a recipe by id', async () => {
     const newUser = {
       username: 'dobby3',
       password: 'chicken',

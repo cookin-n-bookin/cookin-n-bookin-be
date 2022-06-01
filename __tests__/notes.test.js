@@ -13,7 +13,7 @@ describe('recipe routes', () => {
     pool.end();
   });
 
-  it.only('should insert a note for a recipe according to recipe id and user id', async () => {
+  it('should insert a note for a recipe according to recipe id and user id', async () => {
     const newUser = {
       username: 'dobby2',
       password: 'chicken',
@@ -94,10 +94,10 @@ describe('recipe routes', () => {
     const res = await agent
       .get('/api/v1/notes');
 
-    expect(res.body).toEqual({
+    expect(res.body).toEqual([{
       id: expect.any(String),
       ...note
-    });
+    }]);
 
 
   });
