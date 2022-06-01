@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
@@ -19,7 +21,7 @@ describe('cookin-n-bookin-be routes', () => {
       .send({ username: 'dobby', password: 'chicken' });
 
     const user = {
-      id: '1', 
+      id: '1',
       username: 'dobby'
     };
 
@@ -39,9 +41,9 @@ describe('cookin-n-bookin-be routes', () => {
     const res = await agent
       .post('/api/v1/users/signin')
       .send(newUser);
-      
+
     const user = {
-      id: '1', 
+      id: '1',
       username: 'dobby'
     };
 
@@ -98,6 +100,53 @@ describe('cookin-n-bookin-be routes', () => {
       username: 'dobby',
       exp: expect.any(Number),
       iat: expect.any(Number),
+    });
+
+  });
+
+  it('should get a user by id', async () => {
+    const newUser = {
+      username: 'dobby',
+      password: 'chicken',
+    };
+
+    await UserService.create(newUser);
+
+    const agent = request.agent(app);
+
+    const res = await agent
+      .post('/api/v1/users/signin')
+      .send(newUser);
+
+    const user = {
+      id: '1',
+      username: 'dobby'
+    };
+
+    expect(res.body).toEqual({ user, message: 'Signed in successfully!' });
+
+    await agent
+      .post('/api/v1/books')
+      .send({
+        title: 'cookin',
+        author: 'bookin',
+        imageId: 'it is an image'
+      });
+
+    console.log('USER ID', user.id);
+    const res2 = await agent
+
+      .get(`/api/v1/users/${user.id}`);
+
+    expect(res2.body).toEqual({
+      id: '1',
+      username: 'dobby',
+      books: [{
+        book_id: expect.any(String),
+        title: 'cookin',
+        author: 'bookin',
+        image_id: 'it is an image',
+      }]
     });
 
   });

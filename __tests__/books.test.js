@@ -81,9 +81,6 @@ describe('book routes', () => {
       password: 'chicken'
     };
 
-
-
-
     const agent = request.agent(app);
     await agent
       .post('/api/v1/users/signup')
@@ -101,7 +98,6 @@ describe('book routes', () => {
 
     const res = await agent
       .get(`/api/v1/books/${book.body.id}`);
-    console.log('||', book.body.id);
 
     expect(res.body).toEqual({
       id: expect.any(String),
