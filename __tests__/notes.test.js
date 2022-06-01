@@ -190,17 +190,17 @@ describe('recipe routes', () => {
     const getAllNotes = await Note.getAll();
 
     const res = await agent
-      .delete(`/api/v1/notes/${note.id}`)
-  });
+      .delete(`/api/v1/notes/${note.body.id}`)
 
-  expect(res.body).toEqual({
-    id: expect.any(String),
-    content: 'This book is about billiards!!!!!',
-    isPrivate: false,
-    userId: '1',
-    recipeId: '1'
-  });
-  const getAllNotes2 = await Note.getAll();
-  expect(getAllNotes2.length).toEqual(getAllNotes.length - 1);
+    expect(res.body).toEqual({
+      id: expect.any(String),
+      content: 'This book is about billiards!!!!!',
+      isPrivate: false,
+      userId: '1',
+      recipeId: '1'
+    });
+    const getAllNotes2 = await Note.getAll();
+    expect(getAllNotes2.length).toEqual(getAllNotes.length - 1);
 
+  });
 });
