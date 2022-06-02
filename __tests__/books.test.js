@@ -57,10 +57,8 @@ describe('book routes', () => {
       .get('/api/v1/books');
     expect(res.body).toEqual([
       {
-        id: '1',
-        title: 'Foodheim',
-        imageId: 'this is an image',
-        author: 'Eric Wareheim'
+        id: expect.any(String),
+        ...book,
       },
       {
         id: '2',
@@ -69,9 +67,12 @@ describe('book routes', () => {
         author: 'Molly Baz',
       },
       {
-        id: expect.any(String),
-        ...book
-      }]);
+        id: '1',
+        title: 'Foodheim',
+        imageId: 'this is an image',
+        author: 'Eric Wareheim'
+      },
+    ]);
   });
 
   it('should get a book by its id', async () => {
