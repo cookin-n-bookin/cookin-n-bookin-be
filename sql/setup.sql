@@ -46,7 +46,7 @@ CREATE TABLE notes (
 
 CREATE TABLE users_recipes (
   user_id BIGINT REFERENCES users(id),
-  recipe_id BIGINT REFERENCES recipes(id),
+  recipe_id BIGINT REFERENCES recipes(id)
 );
 
 INSERT INTO 
