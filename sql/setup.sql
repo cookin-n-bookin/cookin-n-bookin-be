@@ -57,7 +57,11 @@ VALUES
 ('Xi''an Famous Foods', 'Jason Wang', 'xi_an_famous_foods_t3rrou'), --3
 ('Dessert Person', 'Claire Saffitz', 'dessert_person_b3nikr'), --4
 ('Nothing Fancy', 'Alison Roman', 'nothing_fancy_zhrstd'), --5
-('That Sounds So Good', 'Carla Lalli Music', 'that_sounds_so_good_m17afz'); --6
+('That Sounds So Good', 'Carla Lalli Music', 'that_sounds_so_good_m17afz'), --6
+('Gordon Ramsay&apos;s Ultimate Cookery Course', 'Gordon Ramsay', '719JTF0ZcjL_bamir8'),
+('Crock Pot - The Original Slow Cooker Recipe Collection', 'Publications International Ltd.', '7394634_gbkdz3'),
+('Magnolia Table', 'Joanna Gaines', '81PxN0B7CmL_czihxs');
+
 
 INSERT INTO
 recipes (title, book_id, page_number, ingredients, rating, image_id)
