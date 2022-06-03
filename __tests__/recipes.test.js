@@ -12,7 +12,7 @@ describe('recipe routes', () => {
     pool.end();
   });
 
-  it('Should insert a recipe according to the books id', async () => {
+  it.skip('Should insert a recipe according to the books id', async () => {
     const newUser = {
       username: 'dobby2',
       password: 'chicken',
@@ -69,7 +69,7 @@ describe('recipe routes', () => {
     ]);
   });
 
-  it('should update a recipe by id', async () => {
+  it.skip('should update a recipe by id', async () => {
     const newUser = {
       username: 'dobby3',
       password: 'chicken',
