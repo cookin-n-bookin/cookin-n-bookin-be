@@ -54,8 +54,8 @@ CREATE TABLE users_recipes (
 INSERT INTO 
 books (title, author, image_id)
 VALUES
-('Foodheim', 'Eric Wareheim', 'this is an image'),
-('Cook This Book', 'Molly Baz', 'this is an image');
+('Foodheim', 'Eric Wareheim', 'rryvwl6wktkziup0kbca'),
+('Cook This Book', 'Molly Baz', 'nugksb4tqxfmvxdittdf');
 
 -- INSERT INTO 
 -- books_users (book_id, user_id)
